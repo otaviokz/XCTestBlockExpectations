@@ -34,8 +34,8 @@ func testSomesynchronousCall() throws {
 
 	// When
 	DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1.25) {
-    	mockApi.returnItems()
-    }
+    		mockApi.returnItems()
+        }
 
     // Then
     waitForExpectations(timeOut: 5)
