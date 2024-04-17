@@ -42,7 +42,7 @@ func testSomesynchronousCall() throws {
 }
 ```
 
-A case similar to the example above can be seen at one of my tech tests [repo](https://github.com/otaviokz/TVmazeAssessmentVIPER), on thi [TestCase](https://github.com/otaviokz/TVmazeAssessmentVIPER/blob/develop/TVMazeAssessmentVIPERTests/Interactors/PagedShowsInteractorTests.swift).
+A case similar to the example above can be seen at one of my tech assessments [repo](https://github.com/otaviokz/TVmazeAssessmentVIPER), on thi [TestCase](https://github.com/otaviokz/TVmazeAssessmentVIPER/blob/develop/TVMazeAssessmentVIPERTests/Interactors/PagedShowsInteractorTests.swift).
 
 ## Contact
 
