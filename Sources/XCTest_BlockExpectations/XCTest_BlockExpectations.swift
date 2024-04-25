@@ -2,22 +2,30 @@
 // https://docs.swift.org/swift-book
 import XCTest
 
-/// Summary
-/// Continualy run block until either it evaluates to true or 'waitForExpectatios' times out
-///
-/// Declaration
-/// public blockExpectation(block: @escaping () -> Bool)
-///
-/// Parameters
-///     block        a  () -> Bool code block that evalueates to eother true of false
-///
-/// Returns
-/// XCTestExpectation
+
+/*!
+ * @method -wait(timeout: TimeInterval = 10, for block: @escaping () -> Bool)
+ *
+ * Executes block until it returns true, or timeout is reached
+ *
+ * @param timeout
+ * The timeout desired
+ *
+ * @param block
+ * A code block in the form () -> Bool that should return true to fulfill the expecation
+ */
 public extension XCTestCase {
-    func blockExpectation(block: @escaping () -> Bool) -> XCTestExpectation {
-        let evaluation: () -> Bool = { block() == true }
-        return expectation(for: NSPredicate(block: { _, _ in
-            evaluation()
-        }), evaluatedWith: evaluation())
+    func wait(timeout: TimeInterval = 10, for block: @escaping () -> Bool) {
+        let blockExpectation = expectation(description: "Block-based expectation")
+        let timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+            DispatchQueue.main.async {
+                if block() {
+                    blockExpectation.fulfill()
+                }
+            }
+            
+        }
+        wait(for: [blockExpectation], timeout: timeout)
+        timer.invalidate()
     }
 }
