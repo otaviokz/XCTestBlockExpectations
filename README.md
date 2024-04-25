@@ -9,7 +9,7 @@ It's still in a beta stage because I'm still trying to find the most elegant and
 Methods available:
 
 ```Swift
-func blockExpectation(block: @escaping () -> Bool) -> XCTestExpectation
+func wait(timeinterval: TimeInterval, for block: @escaping () -> Bool)
 ``` 
 
 ### Usage examples:
@@ -17,32 +17,20 @@ func blockExpectation(block: @escaping () -> Bool) -> XCTestExpectation
 ```Swift
 func testSomesynchronousCall() throws {
 	// GIVEN
-	let mockApi = MockApi()
-	let viewModel(api: mockApi)
-
-	_ = blockExpectation {
-		viewModel.isLoading == true &&
-		viewModel.items.isEmpty == true
-	}
-
-	_ = blockExpectation {
-		viewModel.isLoading == false &&
-		viewModel.items.isEmpty == false
-	}
-
 	viewModel.fetchItems()
 
-	// When
+	// When (this mockAPI only returns items once they are set to a non empty array
 	DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1.25) {
-    	mockApi.returnItems()
+    	mockApi.items = sampleItems 
     }
 
-    // Then
-    waitForExpectations(timeOut: 5)
+    // THEN
+    wait() {
+    	viewModel.isLoading == false &&
+		viewModel.items.isEmpty == false
+    }
 }
 ```
-
-A case similar to the example above can be seen at one of my tech tests [repo](https://github.com/otaviokz/TVmazeAssessmentVIPER), on thi [TestCase](https://github.com/otaviokz/TVmazeAssessmentVIPER/blob/develop/TVMazeAssessmentVIPERTests/Interactors/PagedShowsInteractorTests.swift).
 
 ## Contact
 
