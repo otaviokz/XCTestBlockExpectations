@@ -22,13 +22,14 @@ func testSomesynchronousCall() throws {
 	// When (this mockAPI only returns items once they are set to a non empty array
 	DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1.25) {
     	mockApi.items = sampleItems 
-    }
+  }
 
-    // THEN
-    wait() {
-    	viewModel.isLoading == false &&
-		viewModel.items.isEmpty == false
-    }
+
+  // THEN
+  wait() {
+    viewModel.isLoading == false &&
+    viewModel.items.isEmpty == false
+  }
 }
 ```
 
